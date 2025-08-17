@@ -13,50 +13,48 @@
   </style><style>
   body {
     font-family: Arial, sans-serif;
-    background: #f4f4f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    background: #f5f5f5;
     margin: 0;
+    padding: 20px;
   }
 
-  #quiz {
+  .quiz-container {
+    max-width: 900px;   /* wider box */
+    margin: 0 auto;
     background: white;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
-    max-width: 700px;
-    width: 90%;
-    text-align: center;
-    font-size: 24px;
+    padding: 40px;      /* more padding */
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
   }
 
   h1 {
-    font-size: 40px;
-    margin-bottom: 30px;
+    font-size: 2.5rem;   /* bigger title */
+    text-align: center;
+  }
+
+  .question {
+    font-size: 1.3rem;   /* bigger question text */
+    margin-bottom: 15px;
+  }
+
+  label {
+    font-size: 1.2rem;   /* bigger choices */
+    display: block;
+    margin-bottom: 8px;
+    cursor: pointer;
   }
 
   button {
-    font-size: 22px;
-    padding: 12px 25px;
-    margin: 20px 10px 0 10px;
-    border-radius: 10px;
-    border: none;
-    background: #4CAF50;
-    color: white;
+    font-size: 1.2rem;   /* bigger button */
+    padding: 12px 20px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: 0.2s;
-  }
-
-  button:hover {
-    background: #45a049;
   }
 
   #result {
-    font-size: 28px;
-    font-weight: bold;
-    margin-top: 25px;
+    font-size: 1.5rem;   /* bigger score text */
+    margin-top: 20px;
+    text-align: center;
   }
 </style>
 
@@ -156,4 +154,5 @@ loadQuestion();
 </script>
 </body>
 </html>
+
 
