@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz on Ionic and Covalent Bonds</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; text-align: center; }
+    #quiz-box { max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; }
+    .question { font-size: 18px; margin-bottom: 15px; }
+    .options { text-align: left; margin: 10px 0; }
+    button { margin-top: 15px; padding: 10px 20px; }
+    #timer { font-weight: bold; color: red; margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+  <h1>Quiz on Ionic and Covalent Bonds</h1>
+  <div id="quiz-box">
+    <div id="timer">Time left: 30s</div>
+    <div id="question-container"></div>
+    <div id="options"></div>
+    <button onclick="submitAnswer()">Submit</button>
+  </div>
+  <div id="result" style="display:none;"></div>
+
+<script>
+const questions = [
+  { q: "1. What is an ionic bond?", options: ["Sharing of electrons","Transfer of electrons","Sharing of protons","Transfer of neutrons"], answer: 1 },
+  { q: "2. What is a covalent bond?", options: ["Transfer of electrons","Sharing of electrons","Sharing of protons","Transfer of neutrons"], answer: 1 },
+  { q: "3. In an ionic bond, electrons are:", options: ["Shared equally","Shared unequally","Transferred","Lost in space"], answer: 2 },
+  { q: "4. Which is an ionic compound?", options: ["H₂O","CO₂","NaCl","CH₄"], answer: 2 },
+  { q: "5. NaCl is:", options: ["Ionic","Covalent","Metallic","Hydrogen"], answer: 0 },
+  { q: "6. In an ionic bond, electrons are:", options: ["Shared between atoms","Transferred from one atom to another","Not involved","Split evenly"], answer: 1 },
+  { q: "7. What types of elements form ionic bonds?", options: ["Metal + Metal","Metal + Nonmetal","Nonmetal + Nonmetal","Gas + Gas"], answer: 1 },
+  { q: "8. Covalent bonds usually form between:", options: ["Metal + Metal","Metal + Nonmetal","Nonmetal + Nonmetal","Gas + Metal"], answer: 2 },
+  { q: "9. In a covalent bond, electrons are:", options: ["Shared","Transferred","Destroyed","Lost"], answer: 0 },
+  { q: "10. Which is a covalent compound?", options: ["NaCl","CO₂","KBr","MgO"], answer: 1 },
+  { q: "11. At room temperature, covalent compounds are often:", options: ["Solid only","Gas, liquid, or solid","Plasma","Ions"], answer: 1 },
+  { q: "12. Covalent bonds are generally:", options: ["Weaker than ionic bonds","Stronger than ionic bonds","Equal in strength","Not comparable"], answer: 0 },
+  { q: "13. Covalent bonds can form between the same element:", options: ["True","False","Only in metals","Never"], answer: 0 },
+  { q: "14. Which is NOT a characteristic of a covalent bond?", options: ["Generally solid at room temp","Does not conduct electricity","Low melting/boiling point","High melting/boiling point"], answer: 3 },
+  { q: "15. Which is a characteristic of an ionic bond?", options: ["High melting/boiling point","Low melting/boiling point","Generally gases/liquids at room temp","Does not conduct electricity"], answer: 0 },
+  { q: "16. Covalent compounds conduct electricity.", options: ["True","False"], answer: 1 },
+  { q: "17. Ionic compounds have high melting/boiling points.", options: ["True","False"], answer: 0 },
+  { q: "18. Ionic bonds are formed by the transfer of electrons.", options: ["True","False"], answer: 0 },
+  { q: "19. Ionic bonds usually form between metal and nonmetals.", options: ["True","False"], answer: 0 },
+  { q: "20. Covalent bonds usually form between a metal and a nonmetal.", options: ["True","False"], answer: 1 },
+  { q: "21. Covalent compounds usually have low melting/boiling points.", options: ["True","False"], answer: 0 },
+  { q: "22. Ionic compounds are often gases at room temperature.", options: ["True","False"], answer: 1 },
+  { q: "23. Ionic bonds are formed by the transfer of electrons.", options: ["True","False"], answer: 0 },
+  { q: "24. Covalent bonds are formed by the sharing of electrons.", options: ["True","False"], answer: 0 },
+  { q: "25. Covalent bonds are generally solid at room temp.", options: ["True","False"], answer: 1 },
+  { q: "26. Ionic compounds conduct electricity when dissolved in water.", options: ["True","False"], answer: 0 },
+  { q: "27. Covalent bonds can form between the same element.", options: ["True","False"], answer: 0 },
+  { q: "28. Electrons are shared in covalent bonding.", options: ["True","False"], answer: 0 },
+  { q: "29. Water is an example of covalent bonding.", options: ["True","False"], answer: 0 },
+  { q: "30. NaCl is an example of an ionic compound.", options: ["True","False"], answer: 0 }
+];
+
+let current = 0;
+let score = 0;
+let timer;
+let timeLeft = 30;
+
+function loadQuestion() {
+  if (current >= questions.length) {
+    document.getElementById("quiz-box").style.display = "none";
+    document.getElementById("result").style.display = "block";
+    document.getElementById("result").innerHTML = `<h2>Your score: ${score} / ${questions.length}</h2>`;
+    return;
+  }
+
+  document.getElementById("question-container").innerHTML = questions[current].q;
+  let optionsHTML = "";
+  questions[current].options.forEach((opt, i) => {
+    optionsHTML += `<label><input type="radio" name="option" value="${i}"> ${opt}</label><br>`;
+  });
+  document.getElementById("options").innerHTML = optionsHTML;
+
+  resetTimer();
+}
+
+function submitAnswer() {
+  let selected = document.querySelector('input[name="option"]:checked');
+  if (selected && parseInt(selected.value) === questions[current].answer) {
+    score++;
+  }
+  current++;
+  loadQuestion();
+}
+
+function resetTimer() {
+  clearInterval(timer);
+  timeLeft = 30;
+  document.getElementById("timer").innerText = `Time left: ${timeLeft}s`;
+  timer = setInterval(() => {
+    timeLeft--;
+    document.getElementById("timer").innerText = `Time left: ${timeLeft}s`;
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      current++;
+      loadQuestion();
+    }
+  }, 1000);
+}
+
+loadQuestion();
+</script>
+</body>
+</html>
