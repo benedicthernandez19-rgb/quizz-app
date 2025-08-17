@@ -2,55 +2,72 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chemistry Quiz</title>
+  <title>Quiz on Ionic and Covalent Bonds</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #f5f5f5;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
       margin: 0;
-      padding: 20px;
+      padding: 15px;
     }
 
-    .container {
+    .quiz-container, #quiz-box {
+      max-width: 100%;   /* full width on phones */
+      margin: 0 auto;
       background: white;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 900px;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     h1 {
+      font-size: 2rem;   /* large title */
       text-align: center;
-      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    #timer {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: red;
+      margin-bottom: 20px;
+      text-align: center;
     }
 
     .question {
-      margin-bottom: 25px;
-      font-size: 1.2rem;
+      font-size: 1.4rem;   /* larger question text */
+      margin-bottom: 15px;
     }
 
     label {
+      font-size: 1.3rem;   /* bigger answer choices */
       display: block;
-      margin: 6px 0;
-      font-size: 1.1rem;
+      margin: 12px 0;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    label:hover {
+      background: #f0f0f0;
+    }
+
+    input[type="radio"] {
+      transform: scale(1.5);   /* make radio buttons larger */
+      margin-right: 10px;
     }
 
     button {
-      display: block;
-      margin: 20px auto;
-      padding: 12px 25px;
-      font-size: 1.2rem;
-      background: #007BFF;
-      color: white;
-      border: none;
+      font-size: 1.5rem;   /* bigger button text */
+      padding: 15px 25px;
+      margin-top: 20px;
       border-radius: 10px;
+      border: none;
+      background: #007bff;
+      color: white;
       cursor: pointer;
+      width: 100%;
     }
 
     button:hover {
@@ -58,103 +75,104 @@
     }
 
     #result {
+      font-size: 1.8rem;
+      margin-top: 30px;
       text-align: center;
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin-top: 20px;
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 1.6rem;
-      }
-      .question {
-        font-size: 1rem;
-      }
-      label {
-        font-size: 1rem;
-      }
-      button {
-        font-size: 1rem;
-        padding: 10px 20px;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Chemistry Quiz</h1>
-    <form id="quizForm">
-      <!-- Multiple choice 1–15 -->
-      <div class="question">
-        <p>1. What is an ionic bond?</p>
-        <label><input type="radio" name="q1" value="a"> a. Sharing of electrons</label>
-        <label><input type="radio" name="q1" value="b"> b. Transfer of electrons</label>
-        <label><input type="radio" name="q1" value="c"> c. Sharing of protons</label>
-        <label><input type="radio" name="q1" value="d"> d. Transfer of neutrons</label>
-      </div>
-
-      <div class="question">
-        <p>2. What is a covalent bond?</p>
-        <label><input type="radio" name="q2" value="a"> a. Transfer of electrons</label>
-        <label><input type="radio" name="q2" value="b"> b. Sharing of electrons</label>
-        <label><input type="radio" name="q2" value="c"> c. Sharing of protons</label>
-        <label><input type="radio" name="q2" value="d"> d. Transfer of neutrons</label>
-      </div>
-
-      <div class="question">
-        <p>3. In an ionic bond, electrons are:</p>
-        <label><input type="radio" name="q3" value="a"> a. Shared equally</label>
-        <label><input type="radio" name="q3" value="b"> b. Shared unequally</label>
-        <label><input type="radio" name="q3" value="c"> c. Transferred</label>
-        <label><input type="radio" name="q3" value="d"> d. Lost in space</label>
-      </div>
-
-      <!-- (continue the same format for Q4–Q15 multiple choice) -->
-      
-      <!-- True/False 16–30 -->
-      <div class="question">
-        <p>16. Covalent compounds conduct an electrical current</p>
-        <label><input type="radio" name="q16" value="true"> TRUE</label>
-        <label><input type="radio" name="q16" value="false"> FALSE</label>
-      </div>
-
-      <div class="question">
-        <p>17. Ionic compounds have high melting and boiling point</p>
-        <label><input type="radio" name="q17" value="true"> TRUE</label>
-        <label><input type="radio" name="q17" value="false"> FALSE</label>
-      </div>
-
-      <!-- (continue same format for Q18–Q30 true/false) -->
-
-      <button type="button" onclick="checkAnswers()">Submit</button>
-    </form>
-    <p id="result"></p>
+  <h1>Quiz on Ionic and Covalent Bonds</h1>
+  <div id="quiz-box">
+    <div id="timer">Time left: 30s</div>
+    <div id="question-container"></div>
+    <div id="options"></div>
+    <button onclick="submitAnswer()">Submit</button>
   </div>
+  <div id="result" style="display:none;"></div>
 
-  <script>
-    function checkAnswers() {
-      let score = 0;
-      const answers = {
-        q1: "b", q2: "b", q3: "c", q4: "c", q5: "a",
-        q6: "b", q7: "b", q8: "c", q9: "a", q10: "b",
-        q11: "b", q12: "a", q13: "a", q14: "d", q15: "a",
-        q16: "false", q17: "true", q18: "true", q19: "true", q20: "false",
-        q21: "true", q22: "false", q23: "true", q24: "true", q25: "false",
-        q26: "true", q27: "true", q28: "true", q29: "true", q30: "true"
-      };
+<script>
+const questions = [
+  { q: "1. What is an ionic bond?", options: ["Sharing of electrons","Transfer of electrons","Sharing of protons","Transfer of neutrons"], answer: 1 },
+  { q: "2. What is a covalent bond?", options: ["Transfer of electrons","Sharing of electrons","Sharing of protons","Transfer of neutrons"], answer: 1 },
+  { q: "3. In an ionic bond, electrons are:", options: ["Shared equally","Shared unequally","Transferred","Lost in space"], answer: 2 },
+  { q: "4. Which is an ionic compound?", options: ["H₂O","CO₂","NaCl","CH₄"], answer: 2 },
+  { q: "5. NaCl is:", options: ["Ionic","Covalent","Metallic","Hydrogen"], answer: 0 },
+  { q: "6. In an ionic bond, electrons are:", options: ["Shared between atoms","Transferred from one atom to another","Not involved","Split evenly"], answer: 1 },
+  { q: "7. What types of elements form ionic bonds?", options: ["Metal + Metal","Metal + Nonmetal","Nonmetal + Nonmetal","Gas + Gas"], answer: 1 },
+  { q: "8. Covalent bonds usually form between:", options: ["Metal + Metal","Metal + Nonmetal","Nonmetal + Nonmetal","Gas + Metal"], answer: 2 },
+  { q: "9. In a covalent bond, electrons are:", options: ["Shared","Transferred","Destroyed","Lost"], answer: 0 },
+  { q: "10. Which is a covalent compound?", options: ["NaCl","CO₂","KBr","MgO"], answer: 1 },
+  { q: "11. At room temperature, covalent compounds are often:", options: ["Solid only","Gas, liquid, or solid","Plasma","Ions"], answer: 1 },
+  { q: "12. Covalent bonds are generally:", options: ["Weaker than ionic bonds","Stronger than ionic bonds","Equal in strength","Not comparable"], answer: 0 },
+  { q: "13. Covalent bonds can form between the same element:", options: ["True","False","Only in metals","Never"], answer: 0 },
+  { q: "14. Which is NOT a characteristic of a covalent bond?", options: ["Generally solid at room temp","Does not conduct electricity","Low melting/boiling point","High melting/boiling point"], answer: 3 },
+  { q: "15. Which is a characteristic of an ionic bond?", options: ["High melting/boiling point","Low melting/boiling point","Generally gases/liquids at room temp","Does not conduct electricity"], answer: 0 },
+  { q: "16. Covalent compounds conduct electricity.", options: ["True","False"], answer: 1 },
+  { q: "17. Ionic compounds have high melting/boiling points.", options: ["True","False"], answer: 0 },
+  { q: "18. Ionic bonds are formed by the transfer of electrons.", options: ["True","False"], answer: 0 },
+  { q: "19. Ionic bonds usually form between metal and nonmetals.", options: ["True","False"], answer: 0 },
+  { q: "20. Covalent bonds usually form between a metal and a nonmetal.", options: ["True","False"], answer: 1 },
+  { q: "21. Covalent compounds usually have low melting/boiling points.", options: ["True","False"], answer: 0 },
+  { q: "22. Ionic compounds are often gases at room temperature.", options: ["True","False"], answer: 1 },
+  { q: "23. Ionic bonds are formed by the transfer of electrons.", options: ["True","False"], answer: 0 },
+  { q: "24. Covalent bonds are formed by the sharing of electrons.", options: ["True","False"], answer: 0 },
+  { q: "25. Covalent bonds are generally solid at room temp.", options: ["True","False"], answer: 1 },
+  { q: "26. Ionic compounds conduct electricity when dissolved in water.", options: ["True","False"], answer: 0 },
+  { q: "27. Covalent bonds can form between the same element.", options: ["True","False"], answer: 0 },
+  { q: "28. Electrons are shared in covalent bonding.", options: ["True","False"], answer: 0 },
+  { q: "29. Water is an example of covalent bonding.", options: ["True","False"], answer: 0 },
+  { q: "30. NaCl is an example of an ionic compound.", options: ["True","False"], answer: 0 }
+];
 
-      for (let q in answers) {
-        const selected = document.querySelector(`input[name="${q}"]:checked`);
-        if (selected && selected.value === answers[q]) {
-          score++;
-        }
-      }
+let current = 0;
+let score = 0;
+let timer;
+let timeLeft = 30;
 
-      document.getElementById("result").innerText = 
-        "You scored " + score + " out of " + Object.keys(answers).length;
+function loadQuestion() {
+  if (current >= questions.length) {
+    document.getElementById("quiz-box").style.display = "none";
+    document.getElementById("result").style.display = "block";
+    document.getElementById("result").innerHTML = `<h2>Your score: ${score} / ${questions.length}</h2>`;
+    return;
+  }
+
+  document.getElementById("question-container").innerHTML = `<div class="question">${questions[current].q}</div>`;
+  let optionsHTML = "";
+  questions[current].options.forEach((opt, i) => {
+    optionsHTML += `<label><input type="radio" name="option" value="${i}"> ${opt}</label>`;
+  });
+  document.getElementById("options").innerHTML = optionsHTML;
+
+  resetTimer();
+}
+
+function submitAnswer() {
+  let selected = document.querySelector('input[name="option"]:checked');
+  if (selected && parseInt(selected.value) === questions[current].answer) {
+    score++;
+  }
+  current++;
+  loadQuestion();
+}
+
+function resetTimer() {
+  clearInterval(timer);
+  timeLeft = 30;
+  document.getElementById("timer").innerText = `Time left: ${timeLeft}s`;
+  timer = setInterval(() => {
+    timeLeft--;
+    document.getElementById("timer").innerText = `Time left: ${timeLeft}s`;
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      current++;
+      loadQuestion();
     }
-  </script>
+  }, 1000);
+}
+
+loadQuestion();
+</script>
 </body>
 </html>
