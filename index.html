@@ -4,60 +4,82 @@
   <meta charset="UTF-8">
   <title>Quiz on Ionic and Covalent Bonds</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; text-align: center; }
-    #quiz-box { max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; }
-    .question { font-size: 18px; margin-bottom: 15px; }
-    .options { text-align: left; margin: 10px 0; }
-    button { margin-top: 15px; padding: 10px 20px; }
-    #timer { font-weight: bold; color: red; margin-bottom: 15px; }
-  </style><style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-    margin: 0;
-    padding: 20px;
-  }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 15px;
+    }
 
-  .quiz-container {
-    max-width: 900px;   /* wider box */
-    margin: 0 auto;
-    background: white;
-    padding: 40px;      /* more padding */
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-  }
+    .quiz-container, #quiz-box {
+      max-width: 100%;   /* full width on phones */
+      margin: 0 auto;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
 
-  h1 {
-    font-size: 2.5rem;   /* bigger title */
-    text-align: center;
-  }
+    h1 {
+      font-size: 2rem;   /* large title */
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-  .question {
-    font-size: 1.3rem;   /* bigger question text */
-    margin-bottom: 15px;
-  }
+    #timer {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: red;
+      margin-bottom: 20px;
+      text-align: center;
+    }
 
-  label {
-    font-size: 1.2rem;   /* bigger choices */
-    display: block;
-    margin-bottom: 8px;
-    cursor: pointer;
-  }
+    .question {
+      font-size: 1.4rem;   /* larger question text */
+      margin-bottom: 15px;
+    }
 
-  button {
-    font-size: 1.2rem;   /* bigger button */
-    padding: 12px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-  }
+    label {
+      font-size: 1.3rem;   /* bigger answer choices */
+      display: block;
+      margin: 12px 0;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      background: #fafafa;
+    }
 
-  #result {
-    font-size: 1.5rem;   /* bigger score text */
-    margin-top: 20px;
-    text-align: center;
-  }
-</style>
+    label:hover {
+      background: #f0f0f0;
+    }
 
+    input[type="radio"] {
+      transform: scale(1.5);   /* make radio buttons larger */
+      margin-right: 10px;
+    }
+
+    button {
+      font-size: 1.5rem;   /* bigger button text */
+      padding: 15px 25px;
+      margin-top: 20px;
+      border-radius: 10px;
+      border: none;
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    #result {
+      font-size: 1.8rem;
+      margin-top: 30px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
   <h1>Quiz on Ionic and Covalent Bonds</h1>
@@ -116,10 +138,10 @@ function loadQuestion() {
     return;
   }
 
-  document.getElementById("question-container").innerHTML = questions[current].q;
+  document.getElementById("question-container").innerHTML = `<div class="question">${questions[current].q}</div>`;
   let optionsHTML = "";
   questions[current].options.forEach((opt, i) => {
-    optionsHTML += `<label><input type="radio" name="option" value="${i}"> ${opt}</label><br>`;
+    optionsHTML += `<label><input type="radio" name="option" value="${i}"> ${opt}</label>`;
   });
   document.getElementById("options").innerHTML = optionsHTML;
 
@@ -154,5 +176,3 @@ loadQuestion();
 </script>
 </body>
 </html>
-
-
